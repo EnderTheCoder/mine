@@ -1,0 +1,39 @@
+name: Miner
+version: '${project.version}'
+main: dev.ender.miner.Miner
+api-version: 1.18
+authors: [ "EnderTheCoder", "Null" ]
+description: A auto generated mine.
+
+commands:
+  miner:
+    usage: |
+      /miner add <矿场名称> <起始位置> <结束位置> <传送点> 添加一个矿场， 每个位置是一组坐标
+      /miner add <矿场名称> 添加一个矿场 依次点击起始位置、结束位置、传送点
+      /miner remove <矿场名称> 删除一个矿场
+      /miner edit <矿场名称> <起始位置> <结束位置> <传送点> 编辑一个矿场， 每个位置是一组坐标
+      /miner tp <矿场名称>  传送到指定名称的矿场
+      /miner list 列出已存在的矿场
+      /miner help 展示本条信息
+
+    description: 矿场插件命令
+    permission: miner.root
+    permission-message: 您没有权限使用此命令
+
+
+permissions:
+  miner.root:
+    description: default permission
+    default: true
+  miner.add:
+    description: a admin permission
+    default: op
+  miner.edit:
+    description: a admin permission
+    default: op
+  miner.tp:
+    description: permission used to tp
+    default: true
+  miner.remove:
+    description: a admin permission
+    default: op
