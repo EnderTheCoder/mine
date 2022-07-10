@@ -71,6 +71,28 @@ public class MineArea {
     }
 
     public void save() {
+        try {
+            new MineArea(this.name);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } catch (MineAreaNotFoundException exception) {
+            SQLite s = new SQLite();
+            s.prepare("INSERT INTO mine_area (name, start_x, start_y, start_z, end_x, end_y, end_z, world, spawn_x, spawn_y, spawn_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            s.bindString(1, this.name);
+            s.bindInt(2, this.startPos.getBlockX());
+            s.bindInt(3, this.startPos.getBlockY());
+            s.bindInt(4, this.startPos.getBlockZ());
+            s.bindInt(5, this.endPos.getBlockX());
+            s.bindInt(6, this.endPos.getBlockY());
+            s.bindInt(7, this.endPos.getBlockZ());
+            s.bindString(8, Objects.requireNonNull(this.startPos.getWorld()).getUID().toString());
+            s.bindDouble(9, this.spawnPos.getX());
+            s.bindDouble(10, this.spawnPos.getY());
+            s.bindDouble(11, this.spawnPos.getZ());
+            s.execute();
+            s.close();
+        }
+
         MINE_AREAS.put(this.name, this);
         SQLite sqLite = new SQLite();
         sqLite.prepare("UPDATE mine_area SET name = ?, start_x = ?, start_y = ?, start_z = ?, end_x = ?, end_y = ?, end_z = ?, spawn_x = ?, spawn_y = ?, spawn_z = ?, world = ? WHERE name = ?");

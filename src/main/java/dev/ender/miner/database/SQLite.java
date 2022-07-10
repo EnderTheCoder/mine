@@ -111,10 +111,10 @@ public class SQLite {
             e.printStackTrace();
         }
     }
-    public boolean isTableExists() {
+    public boolean isTableExists(String tableName) {
         SQLite s = new SQLite();
         s.prepare("SELECT * FROM sqlite_master WHERE type='table' AND name = ?");
-        s.bindString(1, "strength");
+        s.bindString(1, tableName);
         s.execute();
         ResultSet resultSet = s.result();
         try {

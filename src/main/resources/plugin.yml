@@ -17,23 +17,27 @@ commands:
       /miner help 展示本条信息
 
     description: 矿场插件命令
-    permission: miner.root
+    permission: miner
     permission-message: 您没有权限使用此命令
 
 
 permissions:
-  miner.root:
+  miner:
     description: default permission
     default: true
-  miner.add:
-    description: a admin permission
-    default: op
-  miner.edit:
-    description: a admin permission
-    default: op
-  miner.tp:
-    description: permission used to tp
-    default: true
-  miner.remove:
-    description: a admin permission
-    default: op
+    children:
+      miner.add:
+        description: a admin permission
+        default: op
+      miner.edit:
+        description: a admin permission
+        default: op
+      miner.tp:
+        description: permission used to tp
+        default: true
+      miner.remove:
+        description: a admin permission
+        default: op
+      miner.list:
+        description: permission used to list out available mine areas
+        default: true

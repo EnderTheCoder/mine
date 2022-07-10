@@ -3,6 +3,7 @@ package dev.ender.miner.command;
 import dev.ender.miner.MineArea;
 import dev.ender.miner.Miner;
 import dev.ender.miner.event.PlayerSelectEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -37,6 +38,10 @@ public class MineCommand implements CommandExecutor {
             case "add": {
                 if (!(sender instanceof Player)) return false;
                 Player player = (Player) sender;
+                if (!player.hasPermission("miner.add")) {
+                    player.sendMessage(ChatColor.RED + Miner.PREFIX + "你没有权限使用这条命令");
+                    return true;
+                }
                 if (args.length == 2) {
                     PlayerSelectEvent.IS_ON_SELECT.put(player, PlayerSelectEvent.ClickState.START_CLICK);
                     PlayerSelectEvent.MINE_AREA_ON_SETTING_UP.put(player, args[1]);
@@ -57,6 +62,10 @@ public class MineCommand implements CommandExecutor {
             }
             case "remove": {
                 if (args.length != 2) return false;
+                if (!sender.hasPermission("miner.remove")) {
+                    sender.sendMessage(ChatColor.RED + Miner.PREFIX + "你没有权限使用这条命令");
+                    return true;
+                }
                 MineArea mineArea = MineArea.MINE_AREAS.get(args[1]);
                 if (mineArea == null) {
                     sender.sendMessage(ChatColor.YELLOW + String.format(Miner.PREFIX + "未找到您输入的矿场'%s'", args[1]));
@@ -68,6 +77,10 @@ public class MineCommand implements CommandExecutor {
             }
             case "edit": {
                 if (!(sender instanceof Player)) return false;
+                if (!sender.hasPermission("miner.edit")) {
+                    sender.sendMessage(ChatColor.RED + Miner.PREFIX + "你没有权限使用这条命令");
+                    return true;
+                }
                 World world = ((Player) sender).getWorld();
                 if (args.length != 11) return false;
                 MineArea mineArea = MineArea.MINE_AREAS.get(args[1]);
@@ -96,6 +109,10 @@ public class MineCommand implements CommandExecutor {
             case "tp": {
                 if (args.length != 2) return false;
                 if (!(sender instanceof Player)) return false;
+                if (!sender.hasPermission("miner.tp")) {
+                    sender.sendMessage(ChatColor.RED + Miner.PREFIX + "你没有权限使用这条命令");
+                    return true;
+                }
                 MineArea mineArea = MineArea.MINE_AREAS.get(args[1]);
                 if (mineArea == null) {
                     sender.sendMessage(ChatColor.YELLOW + String.format(Miner.PREFIX + "未找到您输入的矿场'%s'", args[1]));
@@ -107,12 +124,6 @@ public class MineCommand implements CommandExecutor {
                 break;
             }
             default: {
-                sender.sendMessage(ChatColor.YELLOW + "/mine add <矿场名称> <起始位置> <结束位置> <传送点> #添加一个矿场， 每个位置是一组坐标\n" +
-                        "/mine add <矿场名称> #添加一个矿场 依次点击起始位置、结束位置、传送点\n" +
-                        "/mine remove <矿场名称> #删除一个矿场\n" +
-                        "/mine edit <矿场名称> <起始位置> <结束位置> <传送点> #编辑一个矿场， 每个位置是一组坐标\n" +
-                        "/mine tp <矿场名称>  #传送到指定名称的矿场\n" +
-                        "/help 展示本条信息");
                 return false;
             }
         }

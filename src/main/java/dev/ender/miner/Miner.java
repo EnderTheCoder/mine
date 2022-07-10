@@ -23,8 +23,10 @@ public final class Miner extends JavaPlugin {
         if (Bukkit.getPluginCommand("miner") != null) {
             Bukkit.getPluginCommand("miner").setExecutor(new MineCommand());
         }
+        SQLite s = new SQLite();
+        if (!s.isTableExists("mine_area")) s.initTable();
         new SQLiteSave().runTaskTimerAsynchronously(this, 20, 200);
-//        if (!sqlite.isTableExists()) sqlite.initTable();
+
         Bukkit.getLogger().info(Color.CYAN + "本插件由EnderTheCoder和Null联合制作");
         Bukkit.getLogger().info(Color.CYAN + "定制插件请联系QQ1991455223,量大优惠，最高半价");
         Bukkit.getLogger().info(Color.CYAN + "原作者保留所有版权");
