@@ -34,29 +34,32 @@ public class PlayerSelectEvent implements Listener {
                 Location blockLocation = Objects.requireNonNull(event.getClickedBlock()).getLocation().getBlock().getLocation();
                 START_BLOCK_LOC.put(player, blockLocation);
                 IS_ON_SELECT.put(player, ClickState.END_CLICK);
-                player.sendMessage(ChatColor.AQUA + "已点击第一个方块");
+                player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "已点击第一个方块");
                 event.setCancelled(true);
                 break;
             }
             case END_CLICK: {
                 Location blockLocation = Objects.requireNonNull(event.getClickedBlock()).getLocation().getBlock().getLocation();
                 if (!Objects.equals(blockLocation.getWorld(), START_BLOCK_LOC.get(player).getWorld())) {
-                    player.sendMessage(ChatColor.RED + "不能在不同的世界点击");
+                    player.sendMessage(ChatColor.RED + Miner.PREFIX + "不能在不同的世界点击");
                     resetClick(player);
                     break;
                 }
                 END_BLOCK_LOC.put(player, blockLocation);
                 IS_ON_SELECT.put(player, ClickState.SPAWN_CLICK);
-                player.sendMessage(ChatColor.AQUA + "已点击第二个方块");
+                player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "已点击第二个方块");
                 event.setCancelled(true);
                 break;
             }
             case SPAWN_CLICK: {
                 Location spawnLocation = Objects.requireNonNull(event.getClickedBlock()).getLocation().getBlock().getLocation();
                 if (!Objects.equals(spawnLocation.getWorld(), START_BLOCK_LOC.get(player).getWorld())) {
-                    player.sendMessage(ChatColor.RED + "不能在不同的世界点击");
+                    player.sendMessage(ChatColor.RED + Miner.PREFIX + "不能在不同的世界点击");
                     resetClick(player);
                     break;
+                }
+                if (!isInArea(spawnLocation, START_BLOCK_LOC.get(player), END_BLOCK_LOC.get(player))) {
+                    player.sendMessage(ChatColor.RED + Miner.PREFIX + "传送点不在此区域内！");
                 }
                 IS_ON_SELECT.remove(player);
                 MineArea mineArea = new MineArea(MINE_AREA_ON_SETTING_UP.get(player), START_BLOCK_LOC.get(player), END_BLOCK_LOC.get(player), spawnLocation);
@@ -74,5 +77,17 @@ public class PlayerSelectEvent implements Listener {
         MINE_AREA_ON_SETTING_UP.remove(player);
         START_BLOCK_LOC.remove(player);
         END_BLOCK_LOC.remove(player);
+    }
+    private static boolean axisTest(double pos, int start, int end) {
+        int startPos = Math.max(start, end);
+        int endPos = Math.min(start, end);
+        return endPos <= pos && pos <= startPos;
+    }
+
+    private static boolean isInArea(Location location, Location startPos, Location endPos) {
+        if (location == null) return false;
+        return axisTest(location.getX(), startPos.getBlockX(), endPos.getBlockX())
+                || axisTest(location.getY(), startPos.getBlockY(), endPos.getBlockY())
+                || axisTest(location.getZ(), startPos.getBlockZ(), endPos.getBlockZ());
     }
 }

@@ -103,7 +103,23 @@ public class MineCommand implements CommandExecutor {
                 break;
             }
             case "list": {
-
+                if (args.length != 1) return false;
+                if (!sender.hasPermission("miner.list")) {
+                    sender.sendMessage(ChatColor.RED + Miner.PREFIX + "你没有权限使用这条命令");
+                    return true;
+                }
+                sender.sendMessage(ChatColor.YELLOW + Miner.PREFIX + "所有矿场信息：\n");
+                sender.sendMessage(ChatColor.YELLOW + "名称 世界 传送点");
+                for (MineArea mineArea : MineArea.MINE_AREAS.values()) {
+                    sender.sendMessage(ChatColor.AQUA + String.format("矿区名称：%s  所在世界：%s  位置：(x:%s,y:%s,z:%s)\n",
+                                    mineArea.getName(),
+                                    mineArea.getWorld().getName(),
+                                    mineArea.getSpawnPos().getX(),
+                                    mineArea.getSpawnPos().getY(),
+                                    mineArea.getSpawnPos().getZ()
+                            )
+                    );
+                }
                 break;
             }
             case "tp": {

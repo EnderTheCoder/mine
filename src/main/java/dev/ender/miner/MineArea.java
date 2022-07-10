@@ -4,6 +4,7 @@ import dev.ender.miner.database.SQLite;
 import dev.ender.miner.exception.MineAreaNotFoundException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -110,7 +111,6 @@ public class MineArea {
         sqLite.bindString(12, this.name);
         sqLite.execute();
         sqLite.close();
-//        MINE_AREAS.put(this.name, this);
     }
 
     public static HashMap<String, MineArea> getAllMineAreas() {
@@ -157,6 +157,9 @@ public class MineArea {
         return this.spawnPos;
     }
 
+    public World getWorld() {
+        return startPos.getWorld();
+    }
     public void remove() {
         SQLite sqLite = new SQLite();
         sqLite.prepare("DELETE FROM mine_area WHERE name = ?");
