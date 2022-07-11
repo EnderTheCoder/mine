@@ -58,17 +58,17 @@ public class MineArea {
         this.spawnPos = spawnPos;
     }
 
-    private boolean axisTest(double pos, int start, int end) {
-        int startPos = Math.max(start, end);
-        int endPos = Math.min(start, end);
+    private boolean axisTest(double pos, double start, double end) {
+        double startPos = Math.max(start, end);
+        double endPos = Math.min(start, end);
         return endPos <= pos && pos <= startPos;
     }
 
     public boolean isInArea(Location location) {
         if (location == null) return false;
-        return axisTest(location.getX(), startPos.getBlockX(), endPos.getBlockX())
-                && axisTest(location.getY(), startPos.getBlockY(), endPos.getBlockY())
-                && axisTest(location.getZ(), startPos.getBlockZ(), endPos.getBlockZ())
+        return axisTest(location.getX(), startPos.getX(), endPos.getX())
+                && axisTest(location.getY(), startPos.getY(), endPos.getY())
+                && axisTest(location.getZ(), startPos.getZ(), endPos.getZ())
                 && Objects.equals(location.getWorld(), this.startPos.getWorld());
     }
 

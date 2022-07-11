@@ -11,7 +11,7 @@ public class JoinAndBackEvent implements Listener {
     @EventHandler
     public static void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (MineArea.isInAnyMineArea(player.getLocation()) && PlayerBackModel.hasOutOfTime(player)) {
+        if (MineArea.isInAnyMineArea(player.getLocation())) {
             PlayerBackModel.tpBack(player);
         }
     }

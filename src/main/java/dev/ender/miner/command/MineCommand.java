@@ -7,7 +7,6 @@ import dev.ender.miner.bossbar.MineAreaTeleportBackCountDownBar;
 import dev.ender.miner.config.Config;
 import dev.ender.miner.database.PlayerBackModel;
 import dev.ender.miner.event.PlayerSelectEvent;
-import dev.ender.miner.task.PlayerBack;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -140,7 +139,7 @@ public class MineCommand implements CommandExecutor {
                 }
                 Player player = (Player) sender;
                 player.teleport(mineArea.getSpawnPos());
-                PlayerBackModel.addPlayer(player);
+                PlayerBackModel.addPlayer((Player)sender);
                 //bossbar
                 MineAreaRefuelCountDownBar.REFUEL_BAR.addPlayer(player);
                 MineAreaTeleportBackCountDownBar.TELEPORT_BACK_BARS.get(player).addPlayer(player);
