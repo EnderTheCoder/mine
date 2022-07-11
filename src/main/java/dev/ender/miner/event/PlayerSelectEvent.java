@@ -25,13 +25,15 @@ public class PlayerSelectEvent implements Listener {
 
     @EventHandler
     public static void onPlayerSelect(PlayerInteractEvent event) {
+
+        if (event.getClickedBlock() == null) return;
         Player player = event.getPlayer();
 
         if (IS_ON_SELECT.get(player) == null) return;
 
         switch (IS_ON_SELECT.get(player)) {
             case START_CLICK: {
-                Location blockLocation = Objects.requireNonNull(event.getClickedBlock()).getLocation().getBlock().getLocation();
+                Location blockLocation = event.getClickedBlock().getLocation().getBlock().getLocation();
                 START_BLOCK_LOC.put(player, blockLocation);
                 IS_ON_SELECT.put(player, ClickState.END_CLICK);
                 player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "已点击第一个方块");
@@ -39,7 +41,7 @@ public class PlayerSelectEvent implements Listener {
                 break;
             }
             case END_CLICK: {
-                Location blockLocation = Objects.requireNonNull(event.getClickedBlock()).getLocation().getBlock().getLocation();
+                Location blockLocation = event.getClickedBlock().getLocation().getBlock().getLocation();
                 if (!Objects.equals(blockLocation.getWorld(), START_BLOCK_LOC.get(player).getWorld())) {
                     player.sendMessage(ChatColor.RED + Miner.PREFIX + "不能在不同的世界点击");
                     resetClick(player);
@@ -52,7 +54,7 @@ public class PlayerSelectEvent implements Listener {
                 break;
             }
             case SPAWN_CLICK: {
-                Location spawnLocation = Objects.requireNonNull(event.getClickedBlock()).getLocation().getBlock().getLocation();
+                Location spawnLocation = event.getClickedBlock().getLocation().getBlock().getLocation();
                 if (!Objects.equals(spawnLocation.getWorld(), START_BLOCK_LOC.get(player).getWorld())) {
                     player.sendMessage(ChatColor.RED + Miner.PREFIX + "不能在不同的世界点击");
                     resetClick(player);

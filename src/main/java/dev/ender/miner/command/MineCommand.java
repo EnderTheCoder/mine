@@ -2,6 +2,7 @@ package dev.ender.miner.command;
 
 import dev.ender.miner.MineArea;
 import dev.ender.miner.Miner;
+import dev.ender.miner.config.Config;
 import dev.ender.miner.event.PlayerSelectEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,11 +19,12 @@ import java.awt.*;
 public class MineCommand implements CommandExecutor {
 
     /**
-     * /mine add <name> <start_pos> <end_pos> <spawn_pos>
-     * /mine add <name>
-     * /mine remove <name>
-     * /mine edit <name> <start_pos> <end_pos> <spawn_pos>
-     * /mine tp <name>
+     * /miner add <name> <start_pos> <end_pos> <spawn_pos>
+     * /miner add <name>
+     * /miner remove <name>
+     * /miner edit <name> <start_pos> <end_pos> <spawn_pos>
+     * /miner tp <name>
+     * /miner reload
      */
     private Location parseLocation(World world, String x, String y, String z) {
         int locationX = Integer.parseInt(x);
@@ -111,7 +113,7 @@ public class MineCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.YELLOW + Miner.PREFIX + "所有矿场信息：\n");
                 sender.sendMessage(ChatColor.YELLOW + "名称 世界 传送点");
                 for (MineArea mineArea : MineArea.MINE_AREAS.values()) {
-                    sender.sendMessage(ChatColor.AQUA + String.format("矿区名称：%s  所在世界：%s  位置：(x:%s,y:%s,z:%s)\n",
+                    sender.sendMessage(ChatColor.AQUA + String.format("%s || %s || (x:%s,y:%s,z:%s)\n",
                                     mineArea.getName(),
                                     mineArea.getWorld().getName(),
                                     mineArea.getSpawnPos().getX(),
@@ -137,6 +139,11 @@ public class MineCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 player.teleport(mineArea.getSpawnPos());
                 player.sendMessage(ChatColor.GREEN + String.format(Miner.PREFIX + "已经将您传送至矿场'%s'", args[1]));
+                break;
+            }
+            case "reload": {
+                Config.reload();
+                sender.sendMessage(ChatColor.GREEN + Miner.PREFIX + "插件重载成功");
                 break;
             }
             default: {

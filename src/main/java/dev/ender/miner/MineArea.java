@@ -67,34 +67,12 @@ public class MineArea {
     public boolean isInArea(Location location) {
         if (location == null) return false;
         return axisTest(location.getX(), startPos.getBlockX(), endPos.getBlockX())
-                || axisTest(location.getY(), startPos.getBlockY(), endPos.getBlockY())
-                || axisTest(location.getZ(), startPos.getBlockZ(), endPos.getBlockZ());
+                && axisTest(location.getY(), startPos.getBlockY(), endPos.getBlockY())
+                && axisTest(location.getZ(), startPos.getBlockZ(), endPos.getBlockZ())
+                && Objects.equals(location.getWorld(), this.startPos.getWorld());
     }
 
-    public void save() {
-        try {
-            new MineArea(this.name);
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        } catch (MineAreaNotFoundException exception) {
-            SQLite s = new SQLite();
-            s.prepare("INSERT INTO mine_area (name, start_x, start_y, start_z, end_x, end_y, end_z, world, spawn_x, spawn_y, spawn_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            s.bindString(1, this.name);
-            s.bindInt(2, this.startPos.getBlockX());
-            s.bindInt(3, this.startPos.getBlockY());
-            s.bindInt(4, this.startPos.getBlockZ());
-            s.bindInt(5, this.endPos.getBlockX());
-            s.bindInt(6, this.endPos.getBlockY());
-            s.bindInt(7, this.endPos.getBlockZ());
-            s.bindString(8, Objects.requireNonNull(this.startPos.getWorld()).getUID().toString());
-            s.bindDouble(9, this.spawnPos.getX());
-            s.bindDouble(10, this.spawnPos.getY());
-            s.bindDouble(11, this.spawnPos.getZ());
-            s.execute();
-            s.close();
-        }
-
-        MINE_AREAS.put(this.name, this);
+    private void update() {
         SQLite sqLite = new SQLite();
         sqLite.prepare("UPDATE mine_area SET name = ?, start_x = ?, start_y = ?, start_z = ?, end_x = ?, end_y = ?, end_z = ?, spawn_x = ?, spawn_y = ?, spawn_z = ?, world = ? WHERE name = ?");
         sqLite.bindString(1, this.name);
@@ -111,6 +89,38 @@ public class MineArea {
         sqLite.bindString(12, this.name);
         sqLite.execute();
         sqLite.close();
+    }
+
+    private void insert() {
+        SQLite s = new SQLite();
+        s.prepare("INSERT INTO mine_area (name, start_x, start_y, start_z, end_x, end_y, end_z, world, spawn_x, spawn_y, spawn_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        s.bindString(1, this.name);
+        s.bindInt(2, this.startPos.getBlockX());
+        s.bindInt(3, this.startPos.getBlockY());
+        s.bindInt(4, this.startPos.getBlockZ());
+        s.bindInt(5, this.endPos.getBlockX());
+        s.bindInt(6, this.endPos.getBlockY());
+        s.bindInt(7, this.endPos.getBlockZ());
+        s.bindString(8, Objects.requireNonNull(this.startPos.getWorld()).getUID().toString());
+        s.bindDouble(9, this.spawnPos.getX());
+        s.bindDouble(10, this.spawnPos.getY());
+        s.bindDouble(11, this.spawnPos.getZ());
+        s.execute();
+        s.close();
+    }
+
+    public void save() {
+        try {
+            new MineArea(this.name);
+            update();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } catch (MineAreaNotFoundException exception) {
+            insert();
+        } finally {
+            MINE_AREAS.put(this.name, this);
+        }
+
     }
 
     public static HashMap<String, MineArea> getAllMineAreas() {
@@ -176,13 +186,20 @@ public class MineArea {
     }
 
     public static void removeMineAreaFromCache(String name) {
-        MINE_AREAS.put(name, null);
+        MINE_AREAS.remove(name);
     }
 
     public static void saveAllMineAreas() {
         for (MineArea mineArea : MINE_AREAS.values()) {
             mineArea.save();
         }
+    }
+
+    public static boolean isInAnyMineArea(Location location) {
+        for (MineArea mineArea : MINE_AREAS.values()) {
+            if (mineArea.isInArea(location)) return true;
+        }
+        return false;
     }
 
 }

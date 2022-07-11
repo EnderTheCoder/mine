@@ -14,6 +14,7 @@ commands:
       /miner edit <矿场名称> <起始位置> <结束位置> <传送点> 编辑一个矿场， 每个位置是一组坐标
       /miner tp <矿场名称>  传送到指定名称的矿场
       /miner list 列出已存在的矿场
+      /miner reload 重载插件
       /miner help 展示本条信息
 
     description: 矿场插件命令
@@ -41,3 +42,12 @@ permissions:
       miner.list:
         description: permission used to list out available mine areas
         default: true
+      miner.place:
+        default: op
+        description: permission for placing blocks in mine areas.
+      miner.break:
+        default: op
+        description: permission for breaking blocks in mine area.
+      miner.reload:
+        description: permission for reload
+        default: op

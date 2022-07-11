@@ -4,11 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class WoolReplacement extends BukkitRunnable {
+public class MineReplacement extends BukkitRunnable {
 
-    private Material material;
-    private Location location;
-    public WoolReplacement(Material material, Location location) {
+    private final Material material;
+    private final Location location;
+    public MineReplacement(Material material, Location location) {
         this.material = material;
         this.location = location;
     }

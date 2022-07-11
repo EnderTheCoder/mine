@@ -137,7 +137,10 @@ public class SQLite {
                 "    end_x   INTEGER,\n" +
                 "    end_y   INTEGER,\n" +
                 "    end_z   INTEGER,\n" +
-                "    world   TEXT\n" +
+                "    world   TEXT,\n" +
+                "    spawn_x REAL,\n" +
+                "    spawn_y REAL,\n" +
+                "    spawn_z REAL\n" +
                 ");\n" +
                 "\n" +
                 "create unique index mine_area_name_uindex\n" +

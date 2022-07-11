@@ -1,0 +1,6 @@
+# 矿物替换列表。格式为：
+# 替换前的方块名称: 替换后的方块名称（注意只有中间的冒号后有一个空格）
+mine_replacement:
+  DIAMOND_ORE: BLUE_WOOL
+  GOLD_ORE: YELLOW_WOOL
+  REDSTONE_ORE: RED_WOOL
