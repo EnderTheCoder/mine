@@ -28,6 +28,10 @@ public class Config {
         }
     }
 
+    public static int getRefuelTime() {
+        return CONFIG.getInt("refuel_time");
+    }
+
     public static void reload() {
         Miner.INSTANCE.reloadConfig();
         Config.CONFIG = Miner.INSTANCE.getConfig();

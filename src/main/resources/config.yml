@@ -4,3 +4,10 @@ mine_replacement:
   DIAMOND_ORE: BLUE_WOOL
   GOLD_ORE: YELLOW_WOOL
   REDSTONE_ORE: RED_WOOL
+
+# 回传命令
+command_back: warp xxx
+# 玩家回传时间
+mine_time: 10000
+# 矿场重置时间间隔
+refuel_time: 10000

@@ -6,6 +6,8 @@ import dev.ender.miner.database.SQLite;
 import dev.ender.miner.event.MineAreaEvent;
 import dev.ender.miner.event.PlayerSelectEvent;
 import dev.ender.miner.exception.UnexpectedConfigFileException;
+import dev.ender.miner.task.MineRefuel;
+import dev.ender.miner.task.PlayerBack;
 import dev.ender.miner.task.SQLiteSave;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -37,10 +39,10 @@ public final class Miner extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
+        new MineRefuel().runTaskTimerAsynchronously(this, 20, Config.getRefuelTime());
         Bukkit.getLogger().info(Color.CYAN + "本插件由EnderTheCoder和Null联合制作");
         Bukkit.getLogger().info(Color.CYAN + "定制插件请联系QQ1991455223,量大优惠，最高半价");
         Bukkit.getLogger().info(Color.CYAN + "原作者保留所有版权");
-
     }
 
     @Override
