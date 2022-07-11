@@ -3,6 +3,7 @@ package dev.ender.miner;
 import dev.ender.miner.command.MineCommand;
 import dev.ender.miner.config.Config;
 import dev.ender.miner.database.SQLite;
+import dev.ender.miner.event.JoinAndBackEvent;
 import dev.ender.miner.event.MineAreaEvent;
 import dev.ender.miner.event.PlayerSelectEvent;
 import dev.ender.miner.exception.UnexpectedConfigFileException;
@@ -25,12 +26,14 @@ public final class Miner extends JavaPlugin {
         this.saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new MineAreaEvent(),this);
         Bukkit.getPluginManager().registerEvents(new PlayerSelectEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new JoinAndBackEvent(), this);
         if (Bukkit.getPluginCommand("miner") != null) {
             Objects.requireNonNull(Bukkit.getPluginCommand("miner")).setExecutor(new MineCommand());
         }
         SQLite s = new SQLite();
         if (!s.isTableExists("mine_area")) s.initTable();
         new SQLiteSave().runTaskTimerAsynchronously(this, 20, 200);
+        new PlayerBack().runTaskTimerAsynchronously(this, 1, 1);
         try {
             Config.initMineReplacement();
         } catch (UnexpectedConfigFileException e) {
