@@ -1,7 +1,9 @@
 package dev.ender.miner.config;
 
 import dev.ender.miner.Miner;
+import dev.ender.miner.database.PlayerBackModel;
 import dev.ender.miner.exception.UnexpectedConfigFileException;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -32,8 +34,24 @@ public class Config {
         return CONFIG.getInt("refuel_time");
     }
 
+    public static int getTeleportBackTime() {
+        return CONFIG.getInt("mine_time");
+    }
+
+    public static String getTeleportBackCommand() {
+        return CONFIG.getString("command_back");
+    }
+
     public static void reload() {
         Miner.INSTANCE.reloadConfig();
         Config.CONFIG = Miner.INSTANCE.getConfig();
+        try {
+            Config.initMineReplacement();
+            PlayerBackModel.initMineTimeConfig();
+        } catch (UnexpectedConfigFileException e) {
+            e.printStackTrace();
+            Bukkit.getLogger().severe("配置文件错误，你输入的方块不存在");
+            Bukkit.getPluginManager().disablePlugin(Miner.INSTANCE);
+        }
     }
 }
