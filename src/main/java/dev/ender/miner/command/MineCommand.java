@@ -4,7 +4,6 @@ import dev.ender.miner.MineArea;
 import dev.ender.miner.Miner;
 import dev.ender.miner.config.Config;
 import dev.ender.miner.event.PlayerSelectEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,7 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.awt.*;
 
 public class MineCommand implements CommandExecutor {
 

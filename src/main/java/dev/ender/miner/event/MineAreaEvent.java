@@ -29,8 +29,13 @@ public class MineAreaEvent implements Listener {
             new MineReplacement(materialToReplace, blockLocation).runTaskLater(Miner.INSTANCE, 1);
         }
     }
-    @EventHandler
-    public static void onPlayerTP() {
 
+    @EventHandler
+    public static void onPlayerPlace(BlockPlaceEvent event) {
+        if (!MineArea.isInAnyMineArea(event.getBlock().getLocation())) return;
+        if (!event.getPlayer().isOp()) {
+            event.getPlayer().sendMessage(ChatColor.YELLOW + Miner.PREFIX + "你没有在矿区放置方块的权限");
+            event.setCancelled(true);
+        }
     }
 }
