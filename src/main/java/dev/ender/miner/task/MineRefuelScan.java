@@ -48,6 +48,6 @@ public class MineRefuelScan extends BukkitRunnable {
                 } while (iterator(startY, endY));
             } while (iterator(startX, endX));
         }
-        Bukkit.getLogger().info("This round of refuel (" + blockCount +  "blocks) spent " + (System.currentTimeMillis() - startTime) + " ms");
+        Bukkit.getLogger().info("This round of refuel (" + blockCount +  " blocks) spent " + (System.currentTimeMillis() - startTime) + " ms");
     }
 }
