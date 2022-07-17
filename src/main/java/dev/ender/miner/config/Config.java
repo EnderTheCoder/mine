@@ -3,10 +3,12 @@ package dev.ender.miner.config;
 import dev.ender.miner.Miner;
 import dev.ender.miner.database.PlayerBackModel;
 import dev.ender.miner.exception.UnexpectedConfigFileException;
+import jdk.tools.jlink.plugin.Plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Steerable;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -29,6 +31,16 @@ public class Config {
             OPPOSITE_MINE_REPLACEMENT.put(materialAfterReplacement, materialToBeReplaced);
         }
     }
+
+    public static String getString(String str_to_get){
+        String s = CONFIG.getString(str_to_get);
+        if(Objects.isNull(s)){
+            Bukkit.getLogger().severe("配置文件错误");
+            Bukkit.getPluginManager().disablePlugin(Miner.INSTANCE);
+        }
+        return s;
+    }
+
 
     public static int getRefuelTime() {
         return CONFIG.getInt("refuel_time");

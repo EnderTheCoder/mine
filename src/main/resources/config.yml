@@ -11,3 +11,67 @@ command_back: warp xxx
 mine_time: 10000
 # 矿场重置时间间隔
 refuel_time: 10000
+
+#提示信息
+
+#已点击第一个方块
+click_on_first_block: 已点击第一个方块
+
+#不能在不同的世界点击
+unable_to_click_in_different_world: 不能在不同的世界点击
+
+#已点击第二个方块
+already_click_second_block: 已点击第二个方块
+
+#传送点不在此区域内
+tpPoint_not_here: 传送点不在此区域内
+
+#已成功设置矿场
+setting_mine_success: 已成功设置矿场
+
+#你没有权限使用这条命令
+permission_denied: 你没有权限使用这条命令
+
+#正在设定新矿场
+setting_new_mine: 正在设定新矿场
+#请依次点击三个方块以分别设定新矿场的<起始位置>，<结束位置>，<出生点位置>
+click_on_three_block: 请依次点击三个方块以分别设定新矿场的<起始位置>，<结束位置>，<出生点位置>
+
+#矿场%矿场名%创建成功, %矿场名%会被自动替换, 请不要修改
+mine_create_success: 矿场%矿场名%创建成功
+
+#未找到您输入的矿场
+input_mine_not_found: 未找到您输入的矿场
+
+#矿场%矿场名%已删除, %矿场名%会被自动替换, 请不要修改
+mine_delete: 矿场%矿场名%已删除
+
+#矿场%矿场名%已更新, %矿场名%会被自动替换, 请不要修改
+mine_update: 矿场已更新
+
+#所有矿场信息
+all_mine_info: 所有矿场信息
+
+#名称 世界 传送点
+name_world_tpPoint: 名称 世界 传送点
+
+#已经将您传送至矿场
+tp_to_mine: 已经将您传送至矿场
+
+#插件重载成功
+plugin_reload: 插件重载成功
+
+#你没有在矿区破坏方块的权限
+no_destroy_permission: 你没有在矿区破坏方块的权限
+
+#你没有在矿区放置方块的权限
+no_place_permission: 你没有在矿区放置方块的权限
+
+#挖矿时间已结束
+time_up: 挖矿时间已结束
+
+
+
+
+
+

@@ -22,7 +22,8 @@ public class MineAreaEvent implements Listener {
 
         if (materialToReplace == null) {
             if (!event.getPlayer().isOp()) {
-                event.getPlayer().sendMessage(ChatColor.YELLOW + Miner.PREFIX + "你没有在矿区破坏方块的权限");
+                //event.getPlayer().sendMessage(ChatColor.YELLOW + Miner.PREFIX + "你没有在矿区破坏方块的权限");
+                event.getPlayer().sendMessage(Config.getString("no_destroy_permission"));
                 event.setCancelled(true);
             }
         } else {
@@ -34,7 +35,9 @@ public class MineAreaEvent implements Listener {
     public static void onPlayerPlace(BlockPlaceEvent event) {
         if (!MineArea.isInAnyMineArea(event.getBlock().getLocation())) return;
         if (!event.getPlayer().isOp()) {
-            event.getPlayer().sendMessage(ChatColor.YELLOW + Miner.PREFIX + "你没有在矿区放置方块的权限");
+            //event.getPlayer().sendMessage(ChatColor.YELLOW + Miner.PREFIX + "你没有在矿区放置方块的权限");
+            event.getPlayer().sendMessage(Config.getString("no_place_permission"));
+
             event.setCancelled(true);
         }
     }

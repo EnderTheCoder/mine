@@ -35,6 +35,7 @@ public class PlayerBackModel {
     public static void tpBack(Player player) {
         if (!player.isOnline()) return;
         player.performCommand(Config.getTeleportBackCommand());
-        player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "挖矿时间已结束");
+        //player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "挖矿时间已结束");
+        player.sendMessage(Config.getString("time_up"));
     }
 }

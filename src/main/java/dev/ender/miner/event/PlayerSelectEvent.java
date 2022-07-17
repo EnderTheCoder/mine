@@ -2,9 +2,11 @@ package dev.ender.miner.event;
 
 import dev.ender.miner.MineArea;
 import dev.ender.miner.Miner;
+import dev.ender.miner.config.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +25,8 @@ public class PlayerSelectEvent implements Listener {
     public static HashMap<Player, Location> START_BLOCK_LOC = new HashMap<>();
     public static HashMap<Player, Location> END_BLOCK_LOC = new HashMap<>();
 
+
+
     @EventHandler
     public static void onPlayerSelect(PlayerInteractEvent event) {
 
@@ -36,37 +40,47 @@ public class PlayerSelectEvent implements Listener {
                 Location blockLocation = event.getClickedBlock().getLocation().getBlock().getLocation();
                 START_BLOCK_LOC.put(player, blockLocation);
                 IS_ON_SELECT.put(player, ClickState.END_CLICK);
-                player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "已点击第一个方块");
+                //player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "已点击第一个方块");
+                player.sendMessage(Config.getString("click_on_first_block"));
                 event.setCancelled(true);
                 break;
             }
             case END_CLICK: {
                 Location blockLocation = event.getClickedBlock().getLocation().getBlock().getLocation();
                 if (!Objects.equals(blockLocation.getWorld(), START_BLOCK_LOC.get(player).getWorld())) {
-                    player.sendMessage(ChatColor.RED + Miner.PREFIX + "不能在不同的世界点击");
+                    //player.sendMessage(ChatColor.RED + Miner.PREFIX + "不能在不同的世界点击");
+                    player.sendMessage(Config.getString("unable_to_click_in_different_world"));
                     resetClick(player);
                     break;
                 }
                 END_BLOCK_LOC.put(player, blockLocation);
                 IS_ON_SELECT.put(player, ClickState.SPAWN_CLICK);
-                player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "已点击第二个方块");
+                //player.sendMessage(ChatColor.AQUA + Miner.PREFIX + "已点击第二个方块");
+                player.sendMessage(Config.getString("already_click_second_block"));
+
                 event.setCancelled(true);
                 break;
             }
             case SPAWN_CLICK: {
                 Location spawnLocation = event.getClickedBlock().getLocation().getBlock().getLocation();
                 if (!Objects.equals(spawnLocation.getWorld(), START_BLOCK_LOC.get(player).getWorld())) {
-                    player.sendMessage(ChatColor.RED + Miner.PREFIX + "不能在不同的世界点击");
+                    //player.sendMessage(ChatColor.RED + Miner.PREFIX + "不能在不同的世界点击");
+                    player.sendMessage(Config.getString("unable_to_click_in_different_world"));
+
                     resetClick(player);
                     break;
                 }
                 if (!isInArea(spawnLocation, START_BLOCK_LOC.get(player), END_BLOCK_LOC.get(player))) {
-                    player.sendMessage(ChatColor.RED + Miner.PREFIX + "传送点不在此区域内！");
+                    //player.sendMessage(ChatColor.RED + Miner.PREFIX + "传送点不在此区域内！");
+                    player.sendMessage(Config.getString("tpPoint_not_here"));
+
                 }
                 IS_ON_SELECT.remove(player);
                 MineArea mineArea = new MineArea(MINE_AREA_ON_SETTING_UP.get(player), START_BLOCK_LOC.get(player), END_BLOCK_LOC.get(player), spawnLocation);
                 MineArea.MINE_AREAS.put(mineArea.getName(), mineArea);
-                player.sendMessage(ChatColor.GREEN + Miner.PREFIX + "已成功设置矿场");
+                //player.sendMessage(ChatColor.GREEN + Miner.PREFIX + "已成功设置矿场");
+                player.sendMessage(Config.getString("setting_mine_success"));
+
                 resetClick(player);
                 event.setCancelled(true);
                 break;
