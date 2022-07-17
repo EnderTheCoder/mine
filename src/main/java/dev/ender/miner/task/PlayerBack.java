@@ -16,6 +16,10 @@ public class PlayerBack extends BukkitRunnable {
         this.startTime = startTime;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     @Override
     public void run() {
         if (player == null || !player.isOnline() || MineAreaTeleportBackCountDownBar.TELEPORT_BACK_BARS.get(this.player) == null) {

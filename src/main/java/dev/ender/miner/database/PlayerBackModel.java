@@ -11,11 +11,17 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class PlayerBackModel {
-    public static void initMineTimeConfig() throws UnexpectedConfigFileException {
-    }
+
+
+    public static List<PlayerBack> PLAYER_BACK_TASKS = new ArrayList<>();
 
     /**
      * Must be called after player has tp to mine area.
