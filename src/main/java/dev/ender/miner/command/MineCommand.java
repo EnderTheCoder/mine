@@ -7,6 +7,7 @@ import dev.ender.miner.bossbar.MineAreaTeleportBackCountDownBar;
 import dev.ender.miner.config.Config;
 import dev.ender.miner.database.PlayerBackModel;
 import dev.ender.miner.event.PlayerSelectEvent;
+import dev.ender.miner.task.PlayerBack;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -177,6 +178,13 @@ public class MineCommand implements CommandExecutor {
                 Config.reload();
                 //sender.sendMessage(ChatColor.GREEN + Miner.PREFIX + "插件重载成功");
                 sender.sendMessage(Config.getString("plugin_reload"));
+                Miner.stopBackgroundTask();
+                Miner.startBackgroundTask();
+                for (PlayerBack task : PlayerBackModel.PLAYER_BACK_TASKS) {
+                    PlayerBackModel.tpBack(task.getPlayer());
+                    task.cancel();
+                }
+                PlayerBackModel.PLAYER_BACK_TASKS.clear();
                 break;
             }
             case "help": {

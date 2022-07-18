@@ -2,7 +2,7 @@ name: Miner
 version: '${project.version}'
 main: dev.ender.miner.Miner
 api-version: 1.18
-authors: [ "EnderTheCoder", "Null" "QJL"]
+authors: [ "EnderTheCoder", "Null", "QJL"]
 description: A auto generated mine.
 
 commands:
